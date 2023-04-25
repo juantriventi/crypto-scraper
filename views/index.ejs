@@ -13,10 +13,31 @@
       <li style="list-style-type: none;">
         <h2><%= data[i].name %></h2>
         <p>Precio: <%= data[i].price %></p>
-        <p>Cambio en la última hora: <%= data[i].change_1h_icon %> <%= data[i].change_1h %></p>
-        <p>Cambio en los últimos 7 días: <%= data[i].change_7d_icon %> <%= data[i].change_7d %></p>
+        <p>Cambio en la última hora: <span class="change-icon-1h"><%= data[i].change_1h_icon %></span> <%= data[i].change_1h %></p>
+        <p>Cambio en los últimos 7 días: <span class="change-icon-7d"><%= data[i].change_7d_icon %></span> <%= data[i].change_7d %></p>
       </li>
     <% } %>
   </ul>
 </body>
+<script>
+  const changeIcons1h = document.querySelectorAll('.change-icon-1h');
+
+changeIcons1h.forEach((icon) => {
+  if (icon.innerText === '+') {
+    icon.style.color = 'green';
+  } else {
+    icon.style.color = 'red';
+  }
+});
+
+const changeIcons7d = document.querySelectorAll('.change-icon-7d');
+
+changeIcons7d.forEach((icon) => {
+  if (icon.innerText === '+') {
+    icon.style.color = 'green';
+  } else {
+    icon.style.color = 'red';
+  }
+});
+</script>
 </html>
