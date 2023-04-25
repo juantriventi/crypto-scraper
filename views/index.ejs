@@ -13,31 +13,43 @@
       <li style="list-style-type: none;">
         <h2><%= data[i].name %></h2>
         <p>Precio: <%= data[i].price %></p>
-        <p>Cambio en la última hora: <span class="change-icon-1h"><%= data[i].change_1h_icon %></span> <%= data[i].change_1h %></p>
-        <p>Cambio en los últimos 7 días: <span class="change-icon-7d"><%= data[i].change_7d_icon %></span> <%= data[i].change_7d %></p>
+        <p>Cambio en la última hora: <span class="change-icon-1h"><%= data[i].change_1h_icon %></span> <span class="my-text-1h"><%= data[i].change_1h %></span></p>
+        <p>Cambio en los últimos 7 días: <span class="change-icon-7d"><%= data[i].change_7d_icon %></span>  <span class="my-text-7d"><%= data[i].change_7d %></span></p>
       </li>
     <% } %>
   </ul>
 </body>
 <script>
-  const changeIcons1h = document.querySelectorAll('.change-icon-1h');
+  const spanElements1h = document.querySelectorAll('.change-icon-1h');
+  const textElements1h = document.querySelectorAll('.my-text-1h');
 
-changeIcons1h.forEach((icon) => {
-  if (icon.innerText === '+') {
-    icon.style.color = 'green';
-  } else {
-    icon.style.color = 'red';
+for (let i = 0; i < spanElements1h.length; i++) {
+  const sign = spanElements1h[i].textContent.trim();
+  const value = parseFloat(textElements1h[i].textContent.trim());
+
+  if (sign === '+') {
+    spanElements1h[i].style.color = 'green';
+    textElements1h[i].style.color = 'green';
+  } else if (sign === '-') {
+    spanElements1h[i].style.color = 'red';
+    textElements1h[i].style.color = 'red';
   }
-});
+}
 
-const changeIcons7d = document.querySelectorAll('.change-icon-7d');
+const spanElements7d = document.querySelectorAll('.change-icon-7d');
+  const textElements7d = document.querySelectorAll('.my-text-7d');
 
-changeIcons7d.forEach((icon) => {
-  if (icon.innerText === '+') {
-    icon.style.color = 'green';
-  } else {
-    icon.style.color = 'red';
+for (let i = 0; i < spanElements7d.length; i++) {
+  const sign = spanElements7d[i].textContent.trim();
+  const value = parseFloat(textElements7d[i].textContent.trim());
+
+  if (sign === '+') {
+    spanElements7d[i].style.color = 'green';
+    textElements7d[i].style.color = 'green';
+  } else if (sign === '-') {
+    spanElements7d[i].style.color = 'red';
+    textElements7d[i].style.color = 'red';
   }
-});
+}
 </script>
 </html>
