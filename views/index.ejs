@@ -8,13 +8,13 @@
 </head>
 <body>
     
-<ul>
+<ul style=" display:flex; justify-content: left; flex-wrap: wrap;">
     <% for (let i = 0; i < data.length; i++) { %>
-      <li style="list-style-type: none;">
-        <h2><%= data[i].name %></h2>
-        <p>Precio: <%= data[i].price %></p>
-        <p>Cambio en la última hora: <span class="change-icon-1h"><%= data[i].change_1h_icon %></span> <span class="my-text-1h"><%= data[i].change_1h %></span></p>
-        <p>Cambio en los últimos 7 días: <span class="change-icon-7d"><%= data[i].change_7d_icon %></span>  <span class="my-text-7d"><%= data[i].change_7d %></span></p>
+      <li style="list-style-type: none; border: 1px solid #000;border-radius: 5px; margin: 12px; padding: 8px; width: 260px;">
+        <h2 style="text-align:center; font: bolder;"><%= data[i].name %></h2>
+        <p style="margin-left: 5px;">Precio: <%= data[i].price %></p>
+        <p style="margin-left: 5px;">Cambio en la última hora: <span class="change-icon-1h"><%= data[i].change_1h_icon %></span> <span class="my-text-1h"><%= data[i].change_1h %></span></p>
+        <p style="margin-left: 5px;">Cambio en los últimos 7 días: <span class="change-icon-7d"><%= data[i].change_7d_icon %></span>  <span class="my-text-7d"><%= data[i].change_7d %></span></p>
       </li>
     <% } %>
   </ul>

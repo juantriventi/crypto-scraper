@@ -42,10 +42,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-
- 
-
   app.listen(3030, (req,res) => {
     console.log("app en puerto 3030")
   })
