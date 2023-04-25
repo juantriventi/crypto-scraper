@@ -12,7 +12,7 @@
     <% for (let i = 0; i < data.length; i++) { %>
       <li style="list-style-type: none; border: 1px solid #084887;;border-radius: 5px; margin: 12px; padding: 8px; width: 260px; background-color: #ebebeb;">
         <h2 style="text-align:center; font: bolder;"><%= data[i].name %></h2>
-        <p style="margin-left: 5px;">Valor: <%= data[i].price %></p>
+        <p  style="margin-left: 5px;">Valor: <span class="valor"><%= data[i].price %></span></p>
         <p style="margin-left: 5px;">Cambio en la última hora: <span class="change-icon-1h"><%= data[i].change_1h_icon %></span> <span class="my-text-1h"><%= data[i].change_1h %></span></p>
         <p style="margin-left: 5px;">Cambio en los últimos 7 días: <span class="change-icon-7d"><%= data[i].change_7d_icon %></span>  <span class="my-text-7d"><%= data[i].change_7d %></span></p>
       </li>
@@ -22,17 +22,21 @@
 <script>
   const spanElements1h = document.querySelectorAll('.change-icon-1h');
   const textElements1h = document.querySelectorAll('.my-text-1h');
+  const pricecripto = document.querySelectorAll('.valor');
 
 for (let i = 0; i < spanElements1h.length; i++) {
   const sign = spanElements1h[i].textContent.trim();
   const value = parseFloat(textElements1h[i].textContent.trim());
+  const price = pricecripto[i].textContent.trim();
 
   if (sign === '+') {
     spanElements1h[i].style.color = 'green';
     textElements1h[i].style.color = 'green';
+    pricecripto[i].style.color = 'green';
   } else if (sign === '-') {
     spanElements1h[i].style.color = 'red';
     textElements1h[i].style.color = 'red';
+    pricecripto[i].style.color = 'red';
   }
 }
 
