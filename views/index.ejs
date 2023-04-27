@@ -7,6 +7,7 @@
     <link rel="shortcut icon" type="image/png" href="https://www.google.com/imgres?imgurl=https%3A%2F%2Flaredhispana.org%2Fwp-content%2Fuploads%2F2022%2F03%2Fcritomonedas-que-son.jpg&tbnid=DqkDO23TTM8tjM&vet=12ahUKEwjM8Ya8x8f-AhX7rJUCHQGqDYEQMygmegUIARCvAg..i&imgrefurl=https%3A%2F%2Flaredhispana.org%2Flifestyle%2Ftecnologia%2Ftodo-lo-que-debes-saber-sobre-las-criptomonedas&docid=TyND22F9R6srLM&w=859&h=517&q=criptomonedas&ved=2ahUKEwjM8Ya8x8f-AhX7rJUCHQGqDYEQMygmegUIARCvAg" />
     <title>crypto-scraper</title>
     <script defer src="/_vercel/insights/script.js"></script>
+    <script src="https://kit.fontawesome.com/8ebfbc89c9.js" crossorigin="anonymous"></script>
 </head>
 <body style="background-color: #084887;">
     <h1 style="text-align: center; color: #fff;">Cotizaciones importantes</h1>
@@ -18,10 +19,10 @@
     </ul>
     <br>
     <h2 style="text-align: center; color: #fff;">Cryptomonedas</h2>
-<ul style=" display:flex; justify-content: center; flex-wrap: wrap; margin-left: -30px;">
+<ul style=" display:flex; justify-content: center; flex-wrap: wrap; margin-left: -30px;" >
     <% for (let i = 0; i < data.length; i++) { %>
-      <li style="list-style-type: none; border: 1px solid #084887;;border-radius: 5px; margin: 12px; padding: 8px; width: 260px; background-color: #ebebeb;">
-        <h2 style="text-align:center; font: bolder;"><%= data[i].name %></h2>
+      <li  style="list-style-type: none; border: 1px solid #084887;;border-radius: 5px; margin: 12px; padding: 8px; width: 260px; background-color: #ebebeb;">
+        <h2 class="card" style="text-align:center; font: bolder;"><%= data[i].name %></h2>
         <p  style="margin-left: 5px;">Valor: <span class="valor"><%= data[i].price %></span></p>
         <p style="margin-left: 5px;">Cambio en la última hora: <span class="change-icon-1h"><%= data[i].change_1h_icon %></span> <span class="my-text-1h"><%= data[i].change_1h %></span></p>
         <p style="margin-left: 5px;">Cambio en los últimos 7 días: <span class="change-icon-7d"><%= data[i].change_7d_icon %></span>  <span class="my-text-7d"><%= data[i].change_7d %></span></p>
@@ -32,10 +33,28 @@
   
 </body>
 <script>
+
+  //VARIABLES SACADAS DEL HTML PARA USAR EN EL DOM
   const spanElements1h = document.querySelectorAll('.change-icon-1h');
   const textElements1h = document.querySelectorAll('.my-text-1h');
   const pricecripto = document.querySelectorAll('.valor');
+  const spanElements7d = document.querySelectorAll('.change-icon-7d');
+  const textElements7d = document.querySelectorAll('.my-text-7d');
+  const tarjeta = document.querySelectorAll('.card');
 
+
+//SI EN 7 DIAS EL PORCENTAJE DE AUMENTO ES +5 SE EDITA CON LO SIGUIENTE
+  for (let i = 0; i < spanElements7d.length; i++) {
+      const sign = spanElements7d[i].textContent.trim();
+      const value = parseFloat(textElements7d[i].textContent.trim());
+
+      if (value > 5.00 && sign === '+') {
+        tarjeta[i].innerHTML += `<p style="text-align:center;font-weight:bolder;display:inline" > 🚀</p>`;
+        }
+  }
+
+
+//SI EL ICONO DE 1 HORA ES + VA VERDE SINO ROJO, EN TODAS LAS CARDS
 for (let i = 0; i < spanElements1h.length; i++) {
   const sign = spanElements1h[i].textContent.trim();
   const value = parseFloat(textElements1h[i].textContent.trim());
@@ -52,8 +71,7 @@ for (let i = 0; i < spanElements1h.length; i++) {
   }
 }
 
-const spanElements7d = document.querySelectorAll('.change-icon-7d');
-  const textElements7d = document.querySelectorAll('.my-text-7d');
+//SI EL ICONO DE 7 DIAS ES + VA VERDE SINO ROJO, EN TODAS LAS CARDS
 
 for (let i = 0; i < spanElements7d.length; i++) {
   const sign = spanElements7d[i].textContent.trim();
@@ -68,6 +86,7 @@ for (let i = 0; i < spanElements7d.length; i++) {
   }
 }
 
+//RECARGA CADA 1 MINUTO PARA ACTUALIZAR DATOS
 setInterval(function() {
   location.reload();
 }, 60000);
