@@ -14,10 +14,11 @@
     <br>
     <h2 style="text-align: center; color: #fff;">Cotización dolar</h2>
     <ul  style=" display:flex; justify-content: center; flex-wrap: wrap;margin-left: -30px;">
-      <li style="list-style-type: none; border: 1px solid #084887;;border-radius: 5px; margin: 12px; padding: 8px; width: 260px; background-color: #ebebeb; text-align: center;"><%= dolar %></li>
-      <li style="list-style-type: none; border: 1px solid #084887;;border-radius: 5px; margin: 12px; padding: 8px; width: 260px; background-color: #ebebeb; text-align: center;"><%= dolar2 %></li>
+      <li style="list-style-type: none; border: 1px solid #084887;;border-radius: 5px; margin: 12px; padding: 8px; width: 260px; background-color: #ebebeb; text-align: center;"><%= dolar %> <br> <%= oficial %></li>
+      <li style="list-style-type: none; border: 1px solid #084887;;border-radius: 5px; margin: 12px; padding: 8px; width: 260px; background-color: #ebebeb; text-align: center;"><%= dolar2 %><br> <%= blue %></li>
     </ul>
     <br>
+    
     <h2 style="text-align: center; color: #fff;">Criptomonedas</h2>
 <ul style=" display:flex; justify-content: center; flex-wrap: wrap; margin-left: -30px;" >
     <% for (let i = 0; i < data.length; i++) { %>
@@ -49,7 +50,7 @@
       const value = parseFloat(textElements7d[i].textContent.trim());
 
       if (value > 5.00 && sign === '+') {
-        tarjeta[i].innerHTML += `<p style="text-align:center;font-weight:bolder;display:inline" > 🚀</p>`;
+        tarjeta[i].innerHTML += `<p style="text-align:center;display:inline;"> 🚀</p>`;
         }
   }
 

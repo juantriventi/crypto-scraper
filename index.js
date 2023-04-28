@@ -13,13 +13,16 @@ app.get('/', (req, res) => {
 
   const url = 'https://coinmarketcap.com/';
   const urlDolar = 'https://www.lanacion.com.ar/';
-  
+  const urlDolarCompraVenta = 'https://www.lanacion.com.ar/tema/dolar-blue-tid67294/';
+
   Promise.all([
     axios.get(url),
-    axios.get(urlDolar)
+    axios.get(urlDolar),
+    axios.get(urlDolarCompraVenta),
+    axios.get(urlDolarCompraVenta)
   ])
   
-  .then(([response, responseDolar]) => {
+  .then(([response, responseDolar, responseDolarOficialCompra, responseDolarBlueCompra]) => {
     const html = response.data;
     const $ = cheerio.load(html);
     const cryptos = [];
@@ -43,12 +46,20 @@ app.get('/', (req, res) => {
     const $dolar = cheerio.load(htmlDolar);
     const dolarOficial = $dolar('div.dollar-container > div > ul.dollar > li:nth-child(1) > a').text();
     const dolarBlue = $dolar('div.dollar-container > div > ul.dollar > li:nth-child(2) > a').text();
-    
-    res.render('index', { data: cryptos, dolar: dolarOficial , dolar2: dolarBlue });
+
+    const htmlDolar_oficial_compra = responseDolarOficialCompra.data;
+    const $dolar_oficial_compra = cheerio.load(htmlDolar_oficial_compra);
+    const dolar_ofi_compra = $dolar_oficial_compra('div.dolar > ul.dolar-subgroup > li:nth-child(1) > div.currency-data > p.com-text').text();
+
+    const htmlDolar_blue_compra = responseDolarBlueCompra.data;
+    const $dolar_blue_compra = cheerio.load(htmlDolar_blue_compra);
+    const dolar_blu_compra = $dolar_blue_compra('div.dolar > ul.dolar-subgroup > li:nth-child(2) > div.currency-data > p.com-text').text();
+
+    res.render('index', { data: cryptos, dolar: dolarOficial , dolar2: dolarBlue , oficial: dolar_ofi_compra, blue:dolar_blu_compra });
   })
     .catch(error => {
       console.error(error);
-      res.status(500).send('Error al obtener los datos de coinmarketcap.com'); // Manejar errores de solicitud
+      res.status(500).send('Error al obtener los datos'); // Manejar errores de solicitud
     });
 });
 
