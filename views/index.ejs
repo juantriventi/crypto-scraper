@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +7,8 @@
     <link rel="shortcut icon" type="image/png" href="https://www.google.com/imgres?imgurl=https%3A%2F%2Flaredhispana.org%2Fwp-content%2Fuploads%2F2022%2F03%2Fcritomonedas-que-son.jpg&tbnid=DqkDO23TTM8tjM&vet=12ahUKEwjM8Ya8x8f-AhX7rJUCHQGqDYEQMygmegUIARCvAg..i&imgrefurl=https%3A%2F%2Flaredhispana.org%2Flifestyle%2Ftecnologia%2Ftodo-lo-que-debes-saber-sobre-las-criptomonedas&docid=TyND22F9R6srLM&w=859&h=517&q=criptomonedas&ved=2ahUKEwjM8Ya8x8f-AhX7rJUCHQGqDYEQMygmegUIARCvAg" />
     <title>crypto-scraper</title>
     <script defer src="/_vercel/insights/script.js"></script>
-    <script src="https://kit.fontawesome.com/8ebfbc89c9.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body style="background-color: #084887;">
     <h1 style="text-align: center; color: #fff;">Cotizaciones importantes</h1>
@@ -31,9 +32,81 @@
     <% } %>
   </ul>
 
+  <form style="display: block; justify-content: center; text-align: center;margin: auto; background-color: #ebebeb; padding: 8px; max-width: 300px;border-radius: 5px;">
+    <h2>Monitoreo de criptomonedas</h2>
+    <label for="opcion" style="text-align: center; margin: 15px;">Seleccione una opción:</label><br>
+    <select id="opcion">
+      <% for (let i = 0; i < data.length; i++) { %>
+        <option data-precio="<%= data[i].price %>"><%= data[i].name %></option>
+      <% } %>
+    </select>
+    <br>
+    <label for="maximo">Ingrese el valor máximo:</label><br>
+    <input style="text-align: center;" type="number" id="maximo" placeholder="valor a mopnitorear">
+    <br>
+    <br>
+    <button type="button" onclick="guardarSeleccion()">Guardar</button>
+  </form>
+
   
 </body>
 <script>
+let criptomonedaSeleccionada = null;
+let valorMaximoSeleccionado = null;
+
+function guardarSeleccion() {
+  const opcionSeleccionada = document.getElementById("opcion").value;
+  const maximoSeleccionado = document.getElementById("maximo").value;
+  localStorage.setItem("criptomonedaSeleccionada", opcionSeleccionada);
+  localStorage.setItem("valorMaximoSeleccionado", maximoSeleccionado);
+  criptomonedaSeleccionada = opcionSeleccionada;
+  valorMaximoSeleccionado = parseFloat(maximoSeleccionado);
+  console.log(`Se ha seleccionado la criptomoneda ${opcionSeleccionada} con un valor máximo de ${maximoSeleccionado}`);
+}
+
+function monitorear() {
+  if (!criptomonedaSeleccionada || !valorMaximoSeleccionado) {
+    criptomonedaSeleccionada = localStorage.getItem("criptomonedaSeleccionada");
+    valorMaximoSeleccionado = parseFloat(localStorage.getItem("valorMaximoSeleccionado"));
+    console.log(`Se han recuperado la criptomoneda ${criptomonedaSeleccionada} y el valor máximo ${valorMaximoSeleccionado} del localStorage`);
+  }
+  
+  const opcionSeleccionada = document.getElementById("opcion");
+  const precio = opcionSeleccionada.options[opcionSeleccionada.selectedIndex].getAttribute("data-precio");
+  const precioNumero = parseFloat(precio.replace(/[^0-9.,]/g, '').replace(',', '.'));
+
+  if (precioNumero >= valorMaximoSeleccionado) {
+   
+    Swal.fire(
+      'ALERTA',
+      `La criptomoneda ${criptomonedaSeleccionada} ha superado el valor máximo de ${valorMaximoSeleccionado}. Precio actual: ${precioNumero}`,
+      'warning'
+    ).then((result) => {
+  if (result.isConfirmed) {
+    document.getElementById("opcion").selectedIndex = 0;
+    document.getElementById("maximo").value = "";
+    localStorage.removeItem("criptomonedaSeleccionada");
+    localStorage.removeItem("valorMaximoSeleccionado");
+    // Agrega más líneas para limpiar más campos de entrada si es necesario
+  }
+  })
+  } else {
+    console.log("La criptomoneda no ha superado el valor máximo establecido.");
+  }
+}
+
+window.onload = function() {
+  const criptomonedaSeleccionada = localStorage.getItem("criptomonedaSeleccionada");
+  const valorMaximoSeleccionado = localStorage.getItem("valorMaximoSeleccionado");
+  if (criptomonedaSeleccionada && valorMaximoSeleccionado) {
+    document.getElementById("opcion").value = criptomonedaSeleccionada;
+    document.getElementById("maximo").value = valorMaximoSeleccionado;
+  }
+}
+
+// Llamamos a la función monitorear cada 10 segundos
+monitorear();
+
 
   //VARIABLES SACADAS DEL HTML PARA USAR EN EL DOM
   const spanElements1h = document.querySelectorAll('.change-icon-1h');
@@ -90,7 +163,7 @@ for (let i = 0; i < spanElements7d.length; i++) {
 //RECARGA CADA 1 MINUTO PARA ACTUALIZAR DATOS
 setInterval(function() {
   location.reload();
-}, 60000);
+}, 10000);
 
 </script>
 </html>

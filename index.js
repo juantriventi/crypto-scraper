@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   const urlDolar = 'https://www.lanacion.com.ar/';
   const urlDolarCompraVenta = 'https://www.lanacion.com.ar/tema/dolar-blue-tid67294/';
 
-  Promise.all([
+ Promise.all([
     axios.get(url),
     axios.get(urlDolar),
     axios.get(urlDolarCompraVenta),
