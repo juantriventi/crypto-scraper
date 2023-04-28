@@ -34,6 +34,7 @@
 
   <form style="display: block; justify-content: center; text-align: center;margin: auto; background-color: #ebebeb; padding: 8px; max-width: 300px;border-radius: 5px;">
     <h2>Monitoreo de criptomonedas</h2>
+    <P style="margin-top:-15px">espere 5 segundos a que valide</P>
     <label for="opcion" style="text-align: center; margin: 15px;">Seleccione una opción:</label><br>
     <select id="opcion" style="color: black;">
       <% for (let i = 0; i < data.length; i++) { %>
@@ -51,9 +52,13 @@
   
 </body>
 <script>
+
+//INICIALIZA LAS VARIABLES
 let criptomonedaSeleccionada = null;
 let valorMaximoSeleccionado = null;
 
+
+//GUARDA LOS VALORES DEL SELECT Y EL INPUT EN EL LOCALSTORAGE ASI SI LA PAGINA SE RECARGA Y ACTUALIZA DATOS ESTOS NO SE BORRAN
 function guardarSeleccion() {
   const opcionSeleccionada = document.getElementById("opcion").value;
   const maximoSeleccionado = document.getElementById("maximo").value;
@@ -62,9 +67,23 @@ function guardarSeleccion() {
   criptomonedaSeleccionada = opcionSeleccionada;
   valorMaximoSeleccionado = parseFloat(maximoSeleccionado);
   console.log(`Se ha seleccionado la criptomoneda ${opcionSeleccionada} con un valor máximo de ${maximoSeleccionado}`);
+
   window.location.reload
 }
 
+
+//AL RECARGARSE LA PAGINA RECARGA LOS DATOS DEL INPUT CON LOS QUE TIENE EL EL LOCALSTORAGE
+window.onload = function() {
+  const criptomonedaSeleccionada = localStorage.getItem("criptomonedaSeleccionada");
+  const valorMaximoSeleccionado = localStorage.getItem("valorMaximoSeleccionado");
+  if (criptomonedaSeleccionada && valorMaximoSeleccionado) {
+    document.getElementById("opcion").value = criptomonedaSeleccionada;
+    document.getElementById("maximo").value = valorMaximoSeleccionado;
+  }
+}
+
+
+//MONITOREA SI LA CRIPTOMONEDA ALCANZA EL VALOR MARCADO EN EL INPUT
 function monitorear() {
   if (!criptomonedaSeleccionada || !valorMaximoSeleccionado) {
     criptomonedaSeleccionada = localStorage.getItem("criptomonedaSeleccionada");
@@ -77,7 +96,6 @@ function monitorear() {
   const precioNumero = parseFloat(precio.replace(/[^0-9.,]/g, '').replace(',', '.'));
 
   if (precioNumero >= valorMaximoSeleccionado) {
-   
     Swal.fire(
       'ALERTA',
       `La criptomoneda ${criptomonedaSeleccionada} ha superado el valor máximo de ${valorMaximoSeleccionado}. Precio actual: ${precioNumero}`,
@@ -88,7 +106,6 @@ function monitorear() {
     document.getElementById("maximo").value = "";
     localStorage.removeItem("criptomonedaSeleccionada");
     localStorage.removeItem("valorMaximoSeleccionado");
-    // Agrega más líneas para limpiar más campos de entrada si es necesario
   }
   })
   } else {
@@ -96,17 +113,9 @@ function monitorear() {
   }
 }
 
-window.onload = function() {
-  const criptomonedaSeleccionada = localStorage.getItem("criptomonedaSeleccionada");
-  const valorMaximoSeleccionado = localStorage.getItem("valorMaximoSeleccionado");
-  if (criptomonedaSeleccionada && valorMaximoSeleccionado) {
-    document.getElementById("opcion").value = criptomonedaSeleccionada;
-    document.getElementById("maximo").value = valorMaximoSeleccionado;
-  }
-}
 
 // Llamamos a la función monitorear cada 10 segundos
-monitorear();
+setInterval(monitorear, 5500)
 
 
   //VARIABLES SACADAS DEL HTML PARA USAR EN EL DOM
@@ -164,7 +173,7 @@ for (let i = 0; i < spanElements7d.length; i++) {
 //RECARGA CADA 1 MINUTO PARA ACTUALIZAR DATOS
 setInterval(function() {
   location.reload();
-}, 60000);
+}, 10000);
 
 </script>
 </html>
