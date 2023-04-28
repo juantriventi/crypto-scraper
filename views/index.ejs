@@ -49,7 +49,7 @@
       const sign = spanElements7d[i].textContent.trim();
       const value = parseFloat(textElements7d[i].textContent.trim());
 
-      if (value > 5.00 && sign === '+') {
+      if (value >= 5.00 && sign === '+') {
         tarjeta[i].innerHTML += `<p style="text-align:center;display:inline;"> 🚀</p>`;
         }
   }
