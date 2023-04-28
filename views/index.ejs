@@ -37,7 +37,7 @@
     <label for="opcion" style="text-align: center; margin: 15px;">Seleccione una opción:</label><br>
     <select id="opcion">
       <% for (let i = 0; i < data.length; i++) { %>
-        <option data-precio="<%= data[i].price %>"><%= data[i].name %></option>
+        <option style="color: black;" data-precio="<%= data[i].price %>"><%= data[i].name %></option>
       <% } %>
     </select>
     <br>
@@ -45,7 +45,7 @@
     <input style="text-align: center;" type="number" id="maximo" placeholder="valor a mopnitorear">
     <br>
     <br>
-    <button type="button" onclick="guardarSeleccion()">Guardar</button>
+    <button style="color:black;" type="button" onclick="guardarSeleccion()">Guardar</button>
   </form>
 
   
@@ -163,7 +163,7 @@ for (let i = 0; i < spanElements7d.length; i++) {
 //RECARGA CADA 1 MINUTO PARA ACTUALIZAR DATOS
 setInterval(function() {
   location.reload();
-}, 10000);
+}, 60000);
 
 </script>
 </html>
