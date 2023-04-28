@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="https://www.google.com/imgres?imgurl=https%3A%2F%2Flaredhispana.org%2Fwp-content%2Fuploads%2F2022%2F03%2Fcritomonedas-que-son.jpg&tbnid=DqkDO23TTM8tjM&vet=12ahUKEwjM8Ya8x8f-AhX7rJUCHQGqDYEQMygmegUIARCvAg..i&imgrefurl=https%3A%2F%2Flaredhispana.org%2Flifestyle%2Ftecnologia%2Ftodo-lo-que-debes-saber-sobre-las-criptomonedas&docid=TyND22F9R6srLM&w=859&h=517&q=criptomonedas&ved=2ahUKEwjM8Ya8x8f-AhX7rJUCHQGqDYEQMygmegUIARCvAg" />
-    <title>crypto-scraper</title>
+    <title>cotizador</title>
     <script defer src="/_vercel/insights/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
@@ -35,14 +35,14 @@
   <form style="display: block; justify-content: center; text-align: center;margin: auto; background-color: #ebebeb; padding: 8px; max-width: 300px;border-radius: 5px;">
     <h2>Monitoreo de criptomonedas</h2>
     <label for="opcion" style="text-align: center; margin: 15px;">Seleccione una opción:</label><br>
-    <select id="opcion">
+    <select id="opcion" style="color: black;">
       <% for (let i = 0; i < data.length; i++) { %>
         <option style="color: black;" data-precio="<%= data[i].price %>"><%= data[i].name %></option>
       <% } %>
     </select>
     <br>
     <label for="maximo">Ingrese el valor máximo:</label><br>
-    <input style="text-align: center;" type="number" id="maximo" placeholder="valor a mopnitorear">
+    <input style="text-align: center;" type="number" id="maximo" placeholder="valor a monitorear">
     <br>
     <br>
     <button style="color:black;" type="button" onclick="guardarSeleccion()">Guardar</button>
